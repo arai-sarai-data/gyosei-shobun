@@ -35,7 +35,13 @@ def fsa():
                 nm = str(r[c_name]).strip()
                 if not nm or nm == "nan":
                     continue
-                d = str(r[c_date]) if c_date else ""
+                raw = r[c_date] if c_date else ""
+                d = str(raw)
+                if re.fullmatch(r"\d{5}(\.0)?", d):  # Excelの日付シリアル値
+                    import datetime as _d
+                    d = (_d.date(1899, 12, 30) + _d.timedelta(days=int(float(d)))).isoformat()
+                elif hasattr(raw, "isoformat"):
+                    d = raw.isoformat()
                 y = re.search(r"(19|20)\d\d", d)
                 rows.append({"co": nm, "date": d[:10], "year": int(y.group(0)) if y else None,
                              "kind": str(r[c_kind]).strip() if c_kind else "", "type": str(r[c_type]).strip() if c_type else name,
@@ -56,7 +62,7 @@ def run():
     years = sorted([{"year": str(k), "n": v} for k, v in Counter(r["year"] for r in rows if r["year"]).items()], key=lambda r: r["year"])
     kinds = sorted([{"kind": k[:40], "n": v} for k, v in Counter(r["kind"] for r in rows if r["kind"]).items()], key=lambda r: -r["n"])
     meth = ("金融庁が公表している「行政処分事例集」（金融庁・財務局等が出した行政処分の一覧）を集計しました。"
-            "同じ会社でも、合併や商号変更で名前が変わると別々に数えています。処分の重さは種類によって大きく違います。")
+            "事例集の1行（1つの命令）を1件として数えるため、同じ日に業務改善命令と業務停止命令が出ると2件になります。同じ会社でも、合併や商号変更で名前が変わると別々に数えています。処分の重さは種類によって大きく違います。")
     R = [{"id": "co", "tab": "会社", "title": "行政処分を受けた回数が多い金融機関・業者", "rows": cos, "method": meth,
           "columns": [{"key": "co", "label": "会社名"}, {"key": "n", "label": "処分の件数", "type": "num", "bar": True},
                       {"key": "type", "label": "業態"}, {"key": "last", "label": "最新の処分日"}],
