@@ -1,0 +1,31 @@
+{
+ "repo": "arai-sarai-data/gyosei-shobun",
+ "title": "行政処分の横断検索",
+ "title_en": "Regulatory Sanctions Search",
+ "short": "行政処分の横断検索",
+ "short_en": "Regulatory Sanctions Search",
+ "tagline": "業務改善命令・業務停止命令を受けた会社を、名前で探せます。まずは金融庁の全処分から。",
+ "tagline_en": "Search companies that received business-improvement or suspension orders. Starting with every FSA sanction.",
+ "color": "#c92a2a",
+ "hashtags": [
+  "行政処分",
+  "金融庁"
+ ],
+ "langs": [
+  "ja",
+  "en"
+ ],
+ "search": {
+  "placeholder": "会社名で検索",
+  "placeholder_en": "Search"
+ },
+ "about": {
+  "what": "国が公表している行政処分の一覧をまとめて検索できるようにします。現在は金融庁の行政処分事例集を収録しています。",
+  "method": "金融庁「行政処分事例集」の各行を1件として数えています。",
+  "notes": [
+   "処分の重さは種類によって大きく違います。",
+   "社名変更・合併後は別の会社として数えます。"
+  ]
+ },
+ "contact": "arai-sarai-data@proton.me"
+}
